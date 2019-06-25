@@ -188,7 +188,7 @@ d.county <- select(d.county, county, avg_annual_pay, annual_avg_emplvl)
 ```
 
 #### discretization, create var `wage` `empquatile`
-```{r create var, eval=FALSE}
+```{r create county var, eval=FALSE}
 d.county$wage <- cut(d.county$avg_annual_pay,
                     quantile(d.county$avg_annual_pay,
                              c(seq(0,.8,by=.2), .9, .95,.99,1) 
@@ -201,7 +201,7 @@ d.county$empquatile <- cut(d.county$annual_avg_emplvl,
                           )
 ```
 
-```{r label var, eval=FALSE}
+```{r label county var, eval=FALSE}
 x <- quantile(d.county$avg_annual_pay, c(seq(0,.8,by=.2), .9, .95,.99,1) )
 xx <- ifelse(x>1000, paste0(round(x/1000),'K'),round(x))
 Labs <- paste(xx[-length(xx)],xx[-1],sep='-')
@@ -412,7 +412,7 @@ breaks <- quantile(annpay$avg_annual_pay,
 
 ### visualization
 
-```{r custom visual func}
+```{r custom visual func,fig.width=8, fig.height=4}
 mychor_time <- function(d, fill_label = ''){
   
   # the dataset d will have a column named 'outcome'
@@ -432,7 +432,7 @@ mychor_time <- function(d, fill_label = ''){
 } 
 ```
 
-```{r}
+```{r,fig.width=8, fig.height=4}
 # Create a corresponding plot object for 2008-2018 data with a loop 
 plt_list <- vector('list',n)
 for(i in 1:n){
@@ -443,9 +443,10 @@ for(i in 1:n){
 ```
 
 
-#### Generate an animated GIF web page file
-```{r gif,eval=FALSE}
+### Generate an animated GIF web page file
+```{r gif,fig.width=8, fig.height=4, eval=FALSE}
 library(choroplethr)
 choroplethr_animate(plt_list)
 ```
 
+According to the gif, we can see areaEmployment and wealth in North Dakota, Nevada, Wyoming and Northeastern coastal are growingobviously rapidly in last decade.
